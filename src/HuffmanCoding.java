@@ -38,26 +38,7 @@ public class HuffmanCoding {
 
     // builds the Huffman tree
     public void huffman(String text) {
-        Map<Character,Integer> frequencyTable =buildFrequencyTable(text);
-        PriorityQueue <Node> Q= new PriorityQueue<>(
-                (a,b) -> Integer.compare(a.getFrequency(),b.getFrequency())
-        );
-        for(Map.Entry<Character,Integer> entry: frequencyTable.entrySet()){
 
-            Character item = entry.getKey();
-            int frequency= entry.getValue();
-            Node newNode = new Node(item,frequency);
-            Q.add(newNode);
-
-        }
-        while (Q.size()>1){
-            Node firstNode=Q.poll();
-            Node secondNode=Q.poll();
-            int newfeq= firstNode.getFrequency()+ secondNode.getFrequency();
-            Node x= new Node (newfeq,firstNode,secondNode);
-            Q.add(x);
-        }
-        this.root =Q.poll();
 
     }
 

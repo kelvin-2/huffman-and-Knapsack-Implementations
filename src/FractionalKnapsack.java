@@ -12,27 +12,26 @@ public class FractionalKnapsack {
 
     // finds optimal solution to fractional knapsack problem
     public void fractionalKnapsack(ArrayList<Transmission> S, double W) {
-        PriorityQueue<Transmission> itemsbyValueIndex = new PriorityQueue<>(
-                (a, b) -> Double.compare(b.getValueIndex(), a.getValueIndex())
+
+        PriorityQueue<Transmission> Q = new PriorityQueue<>(
+                (a,b) -> Double.compare(b.getValueIndex(),a.getValueIndex())
         );
+        taken=new ArrayList<>();
+        double totalWeight=0;
+         totalBenefit=0;
 
-        for (int i=0; i< S.size();i++){
+        for(Transmission trans: S){
+            Q.add(trans);
+        }
+        while(totalWeight<W && !Q.isEmpty()){
 
-            Transmission item = S.get(i);
-            itemsbyValueIndex.add(item);
+            Transmission node= Q.poll();
+            double amountTaken = Math.min(node.getWeight(),W-totalWeight);
+            node.setAmountTaken(amountTaken);
+            taken.add(node);
+            totalBenefit += (amountTaken/node.getWeight())*node.getBenefit();
+            totalWeight += amountTaken;
         }
 
-        double totalWeight=0 ;
-        while(totalWeight<W && !itemsbyValueIndex.isEmpty()){
-            Transmission value= itemsbyValueIndex.poll();
-            double amountTaken = Math.min(value.getWeight(),W-totalWeight);
-            value.setAmountTaken(amountTaken);
-            totalWeight+= amountTaken;
-            this.taken.add(value);//keeps track off how much was taken
-
-
-            totalBenefit +=amountTaken*value.getValueIndex();
-
-        }
     }
 }
